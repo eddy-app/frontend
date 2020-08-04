@@ -1,0 +1,13 @@
+@import "tailwindcss/base";
+
+@import "tailwindcss/components";
+
+@import "tailwindcss/utilities";
+
+.cta-home {
+  @apply w-32 h-12 rounded bg-primary text-white font-semibold text-base antialiased transition-all duration-500 ease-in-out;
+}
+
+.cta-home:hover {
+  @apply bg-hover;
+}
