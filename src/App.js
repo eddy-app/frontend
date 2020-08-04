@@ -14,7 +14,8 @@ const App = () => {
     <Auth0Provider
       domain={process.env.REACT_APP_AUTH0_DOMAIN}
       clientId={process.env.REACT_APP_AUTH0_CLIENT}
-      redirectUri={`${window.location.origin}/dashboard`}>
+      redirectUri={`${window.location.origin}/dashboard`}
+      audience={process.env.REACT_APP_AUTH0_AUDIENCE}>
       <Router>
         <AppRoutes />
       </Router>
