@@ -23,20 +23,15 @@ const PriceCard = ({
         </div>
       </div>
       <div className="col-span-1">
-        {features.map((f, id) => {
+        {features.map((features, id) => {
           return (
-            <>
-              <p>
-                <FontAwesomeIcon
-                  icon="check"
-                  style={{ marginRight: "1.1rem" }}
-                />
-                {features}
-              </p>
-            </>
+            <p key={id}>
+              <FontAwesomeIcon icon="check" style={{ marginRight: "1.1rem" }} />
+              {features}
+            </p>
           )
         })}
-        <button>{btn_label}</button>
+        <div>{btn_label}</div>
       </div>
     </button>
   )

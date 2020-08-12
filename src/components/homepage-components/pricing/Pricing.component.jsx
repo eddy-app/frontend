@@ -35,7 +35,7 @@ const Pricing = () => {
           {subscriptions.map(({ id, ...otherProps }) => (
             <PricingCard
               className="col-span-1"
-              id={id}
+              key={id}
               {...otherProps}
               isMonthly={isMonthly}
             />

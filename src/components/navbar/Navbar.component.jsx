@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useCallback } from "react"
 import { useAuth0 } from "@auth0/auth0-react"
+import { ReactComponent as Branding } from "../../images/logo.svg"
 
 // Styles
 import {
@@ -14,8 +15,7 @@ import {
 } from "./Navbar.styles"
 
 const Navbar = () => {
-  const { isAuthenticated } = useAuth0()
-
+  const { isAuthenticated, loginWithRedirect } = useAuth0()
   const navRef = useRef()
   const containerRef = useRef()
 
@@ -58,7 +58,9 @@ const Navbar = () => {
         className="container mx-auto transition-all duration-500 ease-in-out">
         <header className={header}>
           <a href="/">
-            <h1 className={logo}>Landr</h1>
+            <h1 className={logo}>
+              <Branding style={{ marginRight: "10px" }} /> eddy
+            </h1>
           </a>
           <nav>
             {!isAuthenticated ? (
@@ -78,13 +80,10 @@ const Navbar = () => {
                     Contact
                   </a>
                 </li>
-                <li className={navlist}>
-                  <a href="/login" className={navlink}>
-                    Login
-                  </a>
-                </li>
                 <li>
-                  <button className={ctaSignup}>Sign up</button>
+                  <button className={ctaSignup} onClick={loginWithRedirect}>
+                    Login
+                  </button>
                 </li>
               </ul>
             ) : (

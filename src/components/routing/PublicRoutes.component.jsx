@@ -6,10 +6,10 @@ import Homepage from "../../pages/Homepage.component"
 const PublicRoutes = () => {
   return (
     <Switch>
-      <Route exact to="/">
+      <Route exact path="/">
         <Homepage />
       </Route>
-      <Route to="*">{/* <NotFound /> */}</Route>
+      <Route path="*">{/* <NotFound /> */}</Route>
     </Switch>
   )
 }

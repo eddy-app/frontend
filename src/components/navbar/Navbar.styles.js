@@ -2,15 +2,21 @@ import { tw } from "tailwindcss-classnames"
 
 export const header = tw(
   "flex",
-  "item-center",
   "justify-between",
   "flex-no-wrap",
   "items-center"
 )
 
-export const logo = tw("font-semibold", "antialiased", "text-2xl")
+export const logo = tw(
+  "flex justify-between flex-no-wrap",
+  "items-baseline",
+  "font-display",
+  "text-2xl",
+  "font-bold",
+  "antialiased"
+)
 
-export const publicNavigation = tw("grid", "grid-cols-5", "items-center")
+export const publicNavigation = tw("grid", "grid-cols-4", "items-center")
 
 export const privateNavigation = tw("grid", "grid-cols-4", "items-center")
 
@@ -27,6 +33,7 @@ export const ctaSignup = tw(
   "hover:text-white",
   "py-2",
   "px-4",
+  "ml-2",
   "border",
   "border-black",
   "hover:border-transparent",

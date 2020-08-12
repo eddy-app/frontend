@@ -3,7 +3,7 @@ import { tw } from "tailwindcss-classnames"
 export const billboardContent = tw("flex justify-between items-center")
 export const billboardLeft = tw("left w-1/2 flex flex-col")
 export const billboardTitle = tw(
-  "font-semibold antialiased font-display text-3/2xl leading-none"
+  "font-bold antialiased font-display text-3/2xl leading-none"
 )
 export const billboardSentence = tw(
   "font-normal text-med antialiased mt-5 mb-5"

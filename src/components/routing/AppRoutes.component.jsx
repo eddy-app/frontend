@@ -1,24 +1,20 @@
 import React from "react"
-import { Switch } from "react-router-dom"
 
 import PublicRoutes from "./PublicRoutes.component"
-import PrivateRouteAll from "./PrivateRouteAll.component"
+import PrivateRoute from "./PrivateRoute.component"
 import AdminRoute from "./AdminRoute.component"
+import Dashboard from "../../pages/Dashboard.component"
 
 const AppRoutes = () => {
   return (
-    <Switch>
+    <>
       <PublicRoutes />
-      <PrivateRouteAll exact to="/dashboard">
-        {/*  */}
-      </PrivateRouteAll>
-      <AdminRoute exact to="/users">
-        {/*  */}
-      </AdminRoute>
-      <AdminRoute exact to="/devices">
-        {/*  */}
-      </AdminRoute>
-    </Switch>
+      <PrivateRoute path="/dashboard">
+        <Dashboard />
+      </PrivateRoute>
+      <AdminRoute path="/users">{/*  */}</AdminRoute>
+      <AdminRoute path="/devices">{/*  */}</AdminRoute>
+    </>
   )
 }
 
