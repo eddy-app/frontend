@@ -1,20 +1,28 @@
-import React from 'react';
-import { SecureRoute, useOktaAuth } from '@okta/okta-react';
+import React, { useEffect, useState } from 'react';
+import { Redirect, Route } from 'react-router-dom';
+import { useOktaAuth } from '@okta/okta-react';
 import Layout from '../Layout.component';
 
 const PrivateRoute = ({ children, ...rest }) => {
-  const { authState, authService } = useOktaAuth();
+  const { authState } = useOktaAuth();
+  const { isAuthenticated } = authState;
+
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  useEffect(() => {
+    if (isAuthenticated) setLoggedIn(isAuthenticated);
+  }, [isAuthenticated]);
+
   return (
-    <SecureRoute
+    <Route
       {...rest}
       render={() =>
-        authState.isAuthenticated ? (
+        loggedIn === true ? (
           <Layout>{children}</Layout>
         ) : (
-          authService.redirect('/login')
+          <Redirect to="/login" />
         )
-      }
-    />
+      }></Route>
   );
 };
 

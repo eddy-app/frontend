@@ -1,12 +1,11 @@
 import React from 'react';
-import { Redirect, useHistory } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { useOktaAuth } from '@okta/okta-react';
 import SignInWidget from '../sign-in-widget/SignInwidget.component';
 
 const Login = () => {
   const { authService, authState } = useOktaAuth();
   const { isPending, isAuthenticated } = authState;
-  console.log(authService);
   const { redirect } = authService;
 
   const onSuccess = res => {

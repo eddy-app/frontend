@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useOktaAuth } from '@okta/okta-react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Redirect } from 'react-router-dom';
 
 import Navbar from '../components/navbar/Navbar.component';
 import Billboard from '../components/homepage-components/billboard/Billboard.component';

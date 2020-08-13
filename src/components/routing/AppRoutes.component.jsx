@@ -1,5 +1,4 @@
 import React from 'react';
-import { SecureRoute } from '@okta/okta-react';
 
 import PublicRoutes from './PublicRoutes.component';
 import PrivateRoute from './PrivateRoute.component';
@@ -12,7 +11,8 @@ const AppRoutes = () => {
       <PublicRoutes />
       <AdminRoute path="/users">{/*  */}</AdminRoute>
       <AdminRoute path="/devices">{/*  */}</AdminRoute>
-      <SecureRoute path="/dashboard" exact component={Dashboard} />
+      <PrivateRoute path="/dashboard" exact component={Dashboard} />
+
       <PrivateRoute path="/users/:uid" exact>
         {/* */}
       </PrivateRoute>
