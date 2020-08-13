@@ -1,6 +1,7 @@
-import React, { useEffect, useRef, useCallback } from "react"
-import { useAuth0 } from "@auth0/auth0-react"
-import { ReactComponent as Branding } from "../../images/logo.svg"
+import React, { useEffect, useRef, useCallback } from 'react';
+import { NavLink } from 'react-router-dom';
+import { useOktaAuth } from '@okta/okta-react';
+import { ReactComponent as Branding } from '../../images/logo.svg';
 
 // Styles
 import {
@@ -12,41 +13,43 @@ import {
   navlink,
   ctaSignup,
   ctaDashboard,
-} from "./Navbar.styles"
+} from './Navbar.styles';
 
 const Navbar = () => {
-  const { isAuthenticated, loginWithRedirect } = useAuth0()
-  const navRef = useRef()
-  const containerRef = useRef()
+  const { authService, authState } = useOktaAuth();
+  const { login } = authService;
+  const { isAuthenticated } = authState;
+  const navRef = useRef();
+  const containerRef = useRef();
 
   const handleScroll = useCallback(() => {
     if (window.pageYOffset > 30) {
-      navRef.current.classList.add("shadow-lg")
-      navRef.current.classList.add("bg-white")
-      navRef.current.classList.add("animated")
-      containerRef.current.classList.remove("container")
-      containerRef.current.classList.remove("mx-auto")
-      navRef.current.classList.add("fadeIn")
-      navRef.current.classList.add("slow")
+      navRef.current.classList.add('shadow-lg');
+      navRef.current.classList.add('bg-white');
+      navRef.current.classList.add('animated');
+      containerRef.current.classList.remove('container');
+      containerRef.current.classList.remove('mx-auto');
+      navRef.current.classList.add('fadeIn');
+      navRef.current.classList.add('slow');
     } else {
-      navRef.current.classList.remove("shadow-lg")
-      navRef.current.classList.remove("bg-white")
-      navRef.current.classList.remove("animated")
-      containerRef.current.classList.add("container")
-      containerRef.current.classList.add("mx-auto")
-      navRef.current.classList.remove("fadeIn")
-      navRef.current.classList.remove("slow")
+      navRef.current.classList.remove('shadow-lg');
+      navRef.current.classList.remove('bg-white');
+      navRef.current.classList.remove('animated');
+      containerRef.current.classList.add('container');
+      containerRef.current.classList.add('mx-auto');
+      navRef.current.classList.remove('fadeIn');
+      navRef.current.classList.remove('slow');
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
-    handleScroll()
+    handleScroll();
 
-    document.addEventListener("scroll", handleScroll)
+    document.addEventListener('scroll', handleScroll);
     return () => {
-      document.removeEventListener("scroll", handleScroll)
-    }
-  }, [handleScroll])
+      document.removeEventListener('scroll', handleScroll);
+    };
+  }, [handleScroll]);
 
   return (
     <section
@@ -59,7 +62,7 @@ const Navbar = () => {
         <header className={header}>
           <a href="/">
             <h1 className={logo}>
-              <Branding style={{ marginRight: "10px" }} /> eddy
+              <Branding style={{ marginRight: '10px' }} /> eddy
             </h1>
           </a>
           <nav>
@@ -81,7 +84,7 @@ const Navbar = () => {
                   </a>
                 </li>
                 <li>
-                  <button className={ctaSignup} onClick={loginWithRedirect}>
+                  <button className={ctaSignup} onClick={() => login('/')}>
                     Login
                   </button>
                 </li>
@@ -104,7 +107,9 @@ const Navbar = () => {
                   </a>
                 </li>
                 <li>
-                  <button className={ctaDashboard}>Dashboard</button>
+                  <NavLink to="/dashboard" className={ctaDashboard}>
+                    Dashboard
+                  </NavLink>
                 </li>
               </ul>
             )}
@@ -112,7 +117,7 @@ const Navbar = () => {
         </header>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;
