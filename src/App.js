@@ -10,16 +10,9 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 import AppRoutes from './components/routing/AppRoutes.component';
+import config from './config/oktaConfig';
 
 library.add(fab, fas, faCheckSquare, faCoffee);
-
-const config = {
-  clientId: process.env.REACT_APP_OKTA_CLIENT_ID,
-  issuer: `${process.env.REACT_APP_OKTA_DOMAIN}/oauth2/default`,
-  redirectUri: `${window.location.origin}/implicit/callback`,
-  scopes: ['openid', 'profile', 'email'],
-  pkce: true,
-};
 
 const App = () => {
   return (

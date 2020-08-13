@@ -16,8 +16,8 @@ import {
 } from './Navbar.styles';
 
 const Navbar = () => {
-  const { authService, authState } = useOktaAuth();
-  const { login } = authService;
+  const { authState } = useOktaAuth();
+
   const { isAuthenticated } = authState;
   const navRef = useRef();
   const containerRef = useRef();
@@ -84,9 +84,9 @@ const Navbar = () => {
                   </a>
                 </li>
                 <li>
-                  <button className={ctaSignup} onClick={() => login('/')}>
+                  <NavLink className={ctaSignup} to="/login">
                     Login
-                  </button>
+                  </NavLink>
                 </li>
               </ul>
             ) : (

@@ -9,13 +9,8 @@ import Login from '../auth/login/Login.component';
 const PublicRoutes = () => {
   return (
     <Switch>
-      <Route exact path="/">
-        <Homepage />
-      </Route>
-      <Route
-        path="/login"
-        render={() => <Login baseUrl={process.env.REACT_APP_OKTA_DOMAIN} />}
-      />
+      <Route exact path="/" component={Homepage} />
+      <Route exact path="/login" component={Login} />
       <Route path="/implicit/callback" component={LoginCallback} />
       <Route path="*">{/* <NotFound /> */}</Route>
     </Switch>

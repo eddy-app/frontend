@@ -12,15 +12,14 @@ const AppRoutes = () => {
       <PublicRoutes />
       <AdminRoute path="/users">{/*  */}</AdminRoute>
       <AdminRoute path="/devices">{/*  */}</AdminRoute>
-      <SecureRoute path="/dashboard" exact={true} component={Dashboard} />
-
-      <PrivateRoute path="/users/:uid" exact={true}>
+      <SecureRoute path="/dashboard" exact component={Dashboard} />
+      <PrivateRoute path="/users/:uid" exact>
         {/* */}
       </PrivateRoute>
-      <PrivateRoute path="/users/:uid/devices" exact={true}>
+      <PrivateRoute path="/users/:uid/devices" exact>
         {/* */}
       </PrivateRoute>
-      <PrivateRoute path="/users/:uid/devices/:deviceId" exact={true}>
+      <PrivateRoute path="/users/:uid/devices/:deviceId" exact>
         {/* */}
       </PrivateRoute>
     </>

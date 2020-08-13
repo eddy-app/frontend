@@ -1,16 +1,17 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 import { useOktaAuth } from '@okta/okta-react';
 import SignInWidget from '../sign-in-widget/SignInwidget.component';
 
-const Login = ({ baseUrl }) => {
+const Login = () => {
   const { authService, authState } = useOktaAuth();
   const { isPending, isAuthenticated } = authState;
+  console.log(authService);
   const { redirect } = authService;
 
   const onSuccess = res => {
     if (res.status === 'SUCCESS') {
-      return redirect({
+      redirect({
         sessionToken: res.session.token,
       });
     } else {
@@ -23,11 +24,12 @@ const Login = ({ baseUrl }) => {
   const onError = err => {
     console.log('error logging in', err);
   };
+
   if (isPending) return null;
   return isAuthenticated ? (
     <Redirect to={{ pathname: '/' }} />
   ) : (
-    <SignInWidget baseUrl={baseUrl} onSuccess={onSuccess} onError={onError} />
+    <SignInWidget onSuccess={onSuccess} onError={onError} />
   );
 };
 

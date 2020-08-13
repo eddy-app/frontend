@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="312px" height="109px" viewBox="0 0 312 109" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 55.1 (78136) - https://sketchapp.com -->
+    <title>Group 10</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M136.396407,76.1194035 C135.856479,75.4141537 135.026742,75.0011719 134.14738,75 L88.481871,75 C86.9055982,75 85.6277766,76.2983776 85.6277766,77.9000022 C85.6277766,82.0179991 78.58958,86.5999957 68.5032107,86.5999957 C58.4168413,86.5999957 51.3786447,82.0179991 51.3786447,77.9000022 C51.3786447,76.2983776 50.1008232,75 48.5245504,75 L2.85904116,75 C1.97957801,74.9984636 1.148528,75.4089835 0.606506796,76.1127052 C0.0644855871,76.816427 -0.127970234,77.7347542 0.0848614707,78.6018016 C3.746576,93.536847 16.9542198,104.014022 32.1020916,104 L104.90433,104 C120.051485,104.015527 133.258291,93.5371485 136.915852,78.6018016 C137.127151,77.7371908 136.93562,76.8218762 136.396407,76.1194035 Z" id="path-1"></path>
+        <filter x="-5.5%" y="-25.9%" width="110.9%" height="151.7%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="0" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.284500656 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Desktop-HD" transform="translate(-177.000000, -73.000000)">
+            <g id="Group-10" transform="translate(182.000000, 73.000000)">
+                <path d="M15,0 L121,0 C122.656854,-3.04359188e-16 124,1.34314575 124,3 L124,81 L12,81 L12,3 C12,1.34314575 13.3431458,3.04359188e-16 15,0 Z" id="Rectangle-3" fill="#1998FF"></path>
+                <g id="Path" fill-rule="nonzero">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                    <use fill="#40A9FF" xlink:href="#path-1"></use>
+                </g>
+                <path d="M43.2802539,45.2009073 C42.460584,45.9686822 42,47.0106653 42,48.0972368 C42,49.1838084 42.460584,50.2257915 43.2802539,50.9935663 C50.1080186,57.4004549 59.36992,61 69.0275636,61 C78.6852073,61 87.9471087,57.4004549 94.7748733,50.9935663 C96.4299576,49.3846407 96.4049999,46.8283291 94.7187796,45.2481068 C93.0325593,43.6678845 90.3073242,43.6468842 88.5936547,45.2009073 C77.7851174,55.3367595 60.264184,55.3367595 49.4556467,45.2009073 C48.6371433,44.4320383 47.5263141,44 46.3679503,44 C45.2095865,44 44.0987573,44.4320383 43.2802539,45.2009073 Z" id="Path" fill="#FFFFFF"></path>
+                <text id="eddy" font-family="MontserratAlternates-Bold, Montserrat Alternates" font-size="58" font-weight="bold" letter-spacing="0.82857118" fill="#000000">
+                    <tspan x="152" y="67">eddy</tspan>
+                </text>
+            </g>
+        </g>
+    </g>
+</svg>

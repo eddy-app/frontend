@@ -1,7 +1,15 @@
-import React from "react"
+import React from 'react';
+import { useOktaAuth } from '@okta/okta-react';
 
 const Dashboard = () => {
-  return <div>Dashboard</div>
-}
+  const { authService } = useOktaAuth();
+  const { logout } = authService;
+  return (
+    <div>
+      <h1>Dashboard</h1>
+      <button onClick={() => logout('/')}>Logout</button>
+    </div>
+  );
+};
 
-export default Dashboard
+export default Dashboard;
