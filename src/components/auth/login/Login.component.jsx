@@ -1,16 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import OktaAuth from '@okta/okta-auth-js';
 import { useOktaAuth } from '@okta/okta-react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers';
+import { FetchContext } from '../../../context/FetchContext';
 
 const Login = () => {
   const history = useHistory();
   const [sessionToken, setSessionToken] = useState();
   const { authService } = useOktaAuth();
   const { redirect } = authService;
+  const fetchContext = useContext(FetchContext);
+  const { isLoggedIn, currentUser } = fetchContext;
 
   const schema = yup.object().shape({
     email: yup.string().email().required(),
@@ -19,6 +22,10 @@ const Login = () => {
 
   const { register, handleSubmit, errors } = useForm({
     resolver: yupResolver(schema),
+  });
+
+  useEffect(() => {
+    if (currentUser && isLoggedIn) history.push('/dashboard');
   });
 
   const onSubmit = async data => {
@@ -35,6 +42,7 @@ const Login = () => {
       const sessionToken = await res.sessionToken;
       setSessionToken(sessionToken);
       await redirect({ sessionToken });
+
       history.push('/dashboard');
     } catch (err) {
       console.log('Found an error', err);

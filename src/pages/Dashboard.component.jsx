@@ -1,37 +1,24 @@
-import React, { useState, useEffect, useCallback, useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useOktaAuth } from '@okta/okta-react';
 import { FetchContext } from '../context/FetchContext';
 
 const Dashboard = () => {
-  console.log(useOktaAuth());
-  const [user, setUser] = useState(null);
-  const { authService, authState } = useOktaAuth();
-  const { logout, getUser } = authService;
-  const { isAuthenticated } = authState;
   const history = useHistory();
-  const fetchContext = useContext(FetchContext);
-  const { saveUser } = fetchContext;
+  const { authState } = useOktaAuth();
+  const { isAuthenticated } = authState;
 
-  const fethUser = useCallback(async () => {
-    try {
-      const currentUser = await getUser();
-      await setUser(currentUser);
-      saveUser(currentUser);
-    } catch (err) {
-      return err;
-    }
-  }, [getUser, saveUser]);
+  const fetchContext = useContext(FetchContext);
+  const { signOut, currentUser, isLoggedIn } = fetchContext;
 
   useEffect(() => {
-    if (!isAuthenticated) history.push('/login');
-    fethUser();
-  }, [fethUser, history, isAuthenticated]);
+    if (!currentUser && !isLoggedIn) history.push('/login');
+  }, [currentUser, history, isAuthenticated, isLoggedIn]);
 
   return (
     <div>
       <h1>Dashboard</h1>
-      <button onClick={() => logout('/')}>Logout</button>
+      <button onClick={() => signOut()}>Logout</button>
     </div>
   );
 };
