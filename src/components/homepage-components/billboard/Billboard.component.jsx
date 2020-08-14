@@ -1,7 +1,7 @@
-import React from "react"
-import { Link } from "react-router-dom"
-import { useAuth0 } from "@auth0/auth0-react"
-import { ReactComponent as Illustration } from "../../../images/landr.svg"
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { useOktaAuth } from '@okta/okta-react';
+import { ReactComponent as Illustration } from '../../../images/landr.svg';
 
 // Styles
 import {
@@ -11,10 +11,11 @@ import {
   billboardSentence,
   billRight,
   // name,
-} from "./Billboard.styles"
+} from './Billboard.styles';
 
 const Billboard = () => {
-  const { isAuthenticated, loginWithRedirect } = useAuth0()
+  const { authState } = useOktaAuth();
+  const { isAuthenticated } = authState;
 
   return (
     <section id="billboard">
@@ -27,9 +28,9 @@ const Billboard = () => {
             helper.
           </p>
           {!isAuthenticated ? (
-            <button className="cta-home" onClick={loginWithRedirect}>
-              Get Started
-            </button>
+            <Link to="login">
+              <button className="cta-home">Get Started</button>
+            </Link>
           ) : (
             <Link to="/dashboard">
               <button className="cta-home">Dashboard</button>
@@ -41,7 +42,7 @@ const Billboard = () => {
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default Billboard
+export default Billboard;
