@@ -5,15 +5,15 @@ import { useOktaAuth } from '@okta/okta-react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers';
-import { FetchContext } from '../../../context/FetchContext';
+import { AuthContext } from '../../../context/AuthContext';
 
 const Login = () => {
   const history = useHistory();
   const [sessionToken, setSessionToken] = useState();
   const { authService } = useOktaAuth();
   const { redirect } = authService;
-  const fetchContext = useContext(FetchContext);
-  const { isLoggedIn, currentUser } = fetchContext;
+  const authContext = useContext(AuthContext);
+  const { isLoggedIn, currentUser } = authContext;
 
   const schema = yup.object().shape({
     email: yup.string().email().required(),

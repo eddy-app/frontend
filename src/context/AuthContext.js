@@ -2,16 +2,15 @@ import React, { createContext, useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
 import { useOktaAuth } from '@okta/okta-react';
 
-const FetchContext = createContext();
-const { Provider } = FetchContext;
+export const AuthContext = createContext();
 
-const FetchProvider = ({ children }) => {
+export const AuthState = ({ children }) => {
+  const { authService } = useOktaAuth();
+  const { getAccessToken, logout, getUser, _oktaAuth } = authService;
   const [accessToken, setAccessToken] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const { authService } = useOktaAuth();
-  const { getAccessToken, logout, getUser } = authService;
 
   const authAxios = axios.create({
     baseURL: process.env.REACT_APP_API_URL,
@@ -34,7 +33,7 @@ const FetchProvider = ({ children }) => {
     err => {
       const code = err && err.response ? err.response.status : 0;
       if (code === 401) {
-        getAccessToken();
+        _oktaAuth.session.refresh();
       }
       return Promise.reject(err);
     }
@@ -44,9 +43,9 @@ const FetchProvider = ({ children }) => {
     try {
       const token = await getAccessToken();
       await setAccessToken(token);
-      setIsLoggedIn(true);
+      await setIsLoggedIn(true);
     } catch (err) {
-      console.log(err);
+      return err;
     }
   }, [getAccessToken]);
 
@@ -62,29 +61,31 @@ const FetchProvider = ({ children }) => {
       await sessionStorage.removeItem('okta-pkce-storage');
       await sessionStorage.removeItem('React::DevTools::lastSelection');
     } catch (err) {
-      console.log(err);
+      return err;
     }
   }, [logout]);
 
-  const saveUser = useCallback(async () => {
-    try {
-      if (currentUser) {
+  const saveUser = useCallback(
+    async user => {
+      try {
         const data = {
-          firstname: currentUser.given_name,
-          lastname: currentUser.family_name,
+          firstname: user.given_name,
+          lastname: user.family_name,
         };
         await authAxios.post('/users/auth', data);
+      } catch (err) {
+        await signOut();
+        return err;
       }
-    } catch (err) {
-      if (err) signOut();
-    }
-  }, [authAxios, currentUser, signOut]);
+    },
+    [authAxios, signOut]
+  );
 
   const fetchUser = useCallback(async () => {
     try {
       const user = await getUser();
       await setCurrentUser(user);
-      saveUser();
+      await saveUser(user);
     } catch (err) {
       console.log(err);
     }
@@ -92,13 +93,16 @@ const FetchProvider = ({ children }) => {
 
   useEffect(() => {
     fetchAccessToken();
-    fetchUser();
-    setIsLoading(false);
+
+    if (accessToken) {
+      fetchUser();
+      setIsLoading(false);
+    }
     // eslint-disable-next-line
-  }, []);
+  }, [accessToken]);
 
   return (
-    <Provider
+    <AuthContext.Provider
       value={{
         currentUser,
         accessToken,
@@ -108,8 +112,6 @@ const FetchProvider = ({ children }) => {
         signOut,
       }}>
       {children}
-    </Provider>
+    </AuthContext.Provider>
   );
 };
-
-export { FetchContext, FetchProvider };

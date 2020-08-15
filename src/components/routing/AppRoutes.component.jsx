@@ -1,5 +1,5 @@
 import React, { lazy, Suspense, useContext } from 'react';
-import { FetchContext } from '../../context/FetchContext';
+import { AuthContext } from '../../context/AuthContext';
 
 import PublicRoutes from './PublicRoutes.component';
 import PrivateRoute from './PrivateRoute.component';
@@ -9,8 +9,8 @@ import LazyDashboard from '../../pages/LazyDashboard';
 const Dashboard = lazy(() => import('../../pages/Dashboard.component'));
 
 const AppRoutes = () => {
-  const fetchContext = useContext(FetchContext);
-  const { isLoading, currentUser } = fetchContext;
+  const authContext = useContext(AuthContext);
+  const { isLoading, currentUser } = authContext;
   return (
     <>
       <PublicRoutes />

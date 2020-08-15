@@ -1,23 +1,20 @@
 import React, { useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useOktaAuth } from '@okta/okta-react';
-import { FetchContext } from '../context/FetchContext';
+import { AuthContext } from '../context/AuthContext';
 
 const Dashboard = () => {
   const history = useHistory();
-  const { authState } = useOktaAuth();
-  const { isAuthenticated } = authState;
-
-  const fetchContext = useContext(FetchContext);
-  const { signOut, currentUser, isLoggedIn } = fetchContext;
+  const authContext = useContext(AuthContext);
+  const { signOut, currentUser, isLoggedIn } = authContext;
 
   useEffect(() => {
     if (!currentUser && !isLoggedIn) history.push('/login');
-  }, [currentUser, history, isAuthenticated, isLoggedIn]);
+  }, [currentUser, isLoggedIn, history]);
 
   return (
     <div>
       <h1>Dashboard</h1>
+      {currentUser && <h2>{currentUser.name}</h2>}
       <button onClick={() => signOut()}>Logout</button>
     </div>
   );

@@ -8,7 +8,7 @@ import {
   faCoffee,
   fas,
 } from '@fortawesome/free-solid-svg-icons';
-import { FetchProvider } from './context/FetchContext';
+import { AuthState } from './context/AuthContext';
 
 import AppRoutes from './components/routing/AppRoutes.component';
 import config from './config/oktaConfig';
@@ -19,9 +19,9 @@ const App = () => {
   return (
     <Router>
       <Security {...config}>
-        <FetchProvider>
+        <AuthState>
           <AppRoutes />
-        </FetchProvider>
+        </AuthState>
       </Security>
     </Router>
   );
