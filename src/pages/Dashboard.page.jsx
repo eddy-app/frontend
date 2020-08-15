@@ -1,8 +1,10 @@
 import React, { useEffect, useContext } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
+import { useOktaAuth } from '@okta/okta-react';
 
 const Dashboard = () => {
+  console.log(useOktaAuth());
   const history = useHistory();
   const authContext = useContext(AuthContext);
   const { signOut, currentUser, isLoggedIn } = authContext;
@@ -16,6 +18,7 @@ const Dashboard = () => {
       <h1>Dashboard</h1>
       {currentUser && <h2>{currentUser.name}</h2>}
       <button onClick={() => signOut()}>Logout</button>
+      <Link to="/users">users</Link>
     </div>
   );
 };

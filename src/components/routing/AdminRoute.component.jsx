@@ -1,12 +1,27 @@
-import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
-// import {} from '@okta/okta-react';
+import React, { useContext } from 'react';
+import { Redirect } from 'react-router-dom';
+import { SecureRoute, useOktaAuth } from '@okta/okta-react';
+import { AuthContext } from '../../context/AuthContext';
 
 import Layout from '../Layout.component';
 
 const AdminRoute = ({ children, ...rest }) => {
-  // const { isAuthenticated, user } = useAuth0()
-  return <Route {...rest}></Route>;
+  const { authState } = useOktaAuth();
+  const { isAuthenticated } = authState;
+  const authContext = useContext(AuthContext);
+  const { currentUser } = authContext;
+
+  return (
+    <SecureRoute
+      {...rest}
+      render={() =>
+        isAuthenticated && currentUser.admin ? (
+          <Layout>{children}</Layout>
+        ) : (
+          <Redirect to="/" />
+        )
+      }></SecureRoute>
+  );
 };
 
 export default AdminRoute;

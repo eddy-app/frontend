@@ -1,6 +1,7 @@
-import React, { useEffect, useRef, useCallback } from 'react';
-import { NavLink } from 'react-router-dom';
-import { useOktaAuth } from '@okta/okta-react';
+import React, { useEffect, useRef, useCallback, useContext } from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { AuthContext } from '../../context/AuthContext';
 import { ReactComponent as Branding } from '../../images/logo.svg';
 
 // Styles
@@ -8,6 +9,7 @@ import {
   header,
   logo,
   publicNavigation,
+  loginNavigation,
   privateNavigation,
   navlist,
   navlink,
@@ -16,9 +18,10 @@ import {
 } from './Navbar.styles';
 
 const Navbar = () => {
-  const { authState } = useOktaAuth();
+  const location = useLocation();
+  const authContext = useContext(AuthContext);
+  const { currentUser } = authContext;
 
-  const { isAuthenticated } = authState;
   const navRef = useRef();
   const containerRef = useRef();
 
@@ -66,29 +69,39 @@ const Navbar = () => {
             </h1>
           </a>
           <nav>
-            {!isAuthenticated ? (
-              <ul className={publicNavigation}>
-                <li className={navlist}>
-                  <a href="#pricing" className={navlink}>
-                    Pricing
-                  </a>
-                </li>
-                <li className={navlist}>
-                  <a href="#team" className={navlink}>
-                    Team
-                  </a>
-                </li>
-                <li className={navlist}>
-                  <a href="#contact" className={navlink}>
-                    Contact
-                  </a>
-                </li>
-                <li>
-                  <NavLink className={ctaSignup} to="/login">
-                    Login
-                  </NavLink>
-                </li>
-              </ul>
+            {!currentUser ? (
+              location.pathname === '/' ? (
+                <ul className={`${publicNavigation} right-align`}>
+                  <li className={navlist}>
+                    <a href="#pricing" className={navlink}>
+                      Pricing
+                    </a>
+                  </li>
+                  <li className={navlist}>
+                    <a href="#team" className={navlink}>
+                      Team
+                    </a>
+                  </li>
+                  <li className={navlist}>
+                    <a href="#contact" className={navlink}>
+                      Contact
+                    </a>
+                  </li>
+                  <li>
+                    <NavLink className={ctaSignup} to="/login">
+                      Login
+                    </NavLink>
+                  </li>
+                </ul>
+              ) : (
+                <ul className={loginNavigation}>
+                  <li>
+                    <NavLink to="/" className={navlink}>
+                      <FontAwesomeIcon icon="chevron-left" /> Home
+                    </NavLink>
+                  </li>
+                </ul>
+              )
             ) : (
               <ul className={privateNavigation}>
                 <li>

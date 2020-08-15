@@ -6,7 +6,7 @@ export const AuthContext = createContext();
 
 export const AuthState = ({ children }) => {
   const { authService } = useOktaAuth();
-  const { getAccessToken, logout, getUser, _oktaAuth } = authService;
+  const { getIdToken, logout, getUser, _oktaAuth } = authService;
   const [accessToken, setAccessToken] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -41,13 +41,13 @@ export const AuthState = ({ children }) => {
 
   const fetchAccessToken = useCallback(async () => {
     try {
-      const token = await getAccessToken();
+      const token = await getIdToken();
       await setAccessToken(token);
       await setIsLoggedIn(true);
     } catch (err) {
       return err;
     }
-  }, [getAccessToken]);
+  }, [getIdToken]);
 
   const signOut = useCallback(async () => {
     try {
