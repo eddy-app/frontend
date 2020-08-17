@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers';
 import { AuthContext } from '../../../context/AuthContext';
+import FormError from '../../common/FormError.component';
 
 const Login = () => {
   const history = useHistory();
@@ -60,7 +61,7 @@ const Login = () => {
             ref={register}
             placeholder="Enter Email..."
           />
-          {errors.email && <span>Email is required</span>}
+          {errors.email && <FormError message="Email is required" />}
         </label>
         <label htmlFor="password">
           <input
@@ -69,7 +70,7 @@ const Login = () => {
             ref={register}
             placeholder="Enter Password..."
           />
-          {errors.username && <span>Username is required</span>}
+          {errors.username && <FormError message="Username is required" />}
         </label>
         <input type="submit" value="Login" />
       </form>
