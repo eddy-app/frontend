@@ -1,27 +1,23 @@
-import React, { useEffect, useRef, useCallback, useContext } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, {
+  useEffect,
+  useState,
+  useRef,
+  useCallback,
+  useContext,
+} from 'react';
+import { useLocation } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
+import NavLinks from './navlinks/NavLinks.component';
 import { ReactComponent as Branding } from '../../images/logo.svg';
 
 // Styles
-import {
-  header,
-  logo,
-  publicNavigation,
-  loginNavigation,
-  privateNavigation,
-  navlist,
-  navlink,
-  ctaSignup,
-  ctaDashboard,
-} from './Navbar.styles';
+import { header, logo } from './Navbar.styles';
 
 const Navbar = () => {
-  const location = useLocation();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const authContext = useContext(AuthContext);
-  const { currentUser } = authContext;
-
+  const { isLoggedIn, currentUser, signOut } = authContext;
+  const location = useLocation();
   const navRef = useRef();
   const containerRef = useRef();
 
@@ -46,86 +42,39 @@ const Navbar = () => {
   }, []);
 
   useEffect(() => {
+    if (isLoggedIn && currentUser) setIsAuthenticated(true);
     handleScroll();
 
     document.addEventListener('scroll', handleScroll);
     return () => {
       document.removeEventListener('scroll', handleScroll);
     };
+    // eslint-disable-next-line
   }, [handleScroll]);
 
   return (
     <section
       ref={navRef}
-      className="sticky top-0 p-6 transition-all duration-300 ease-in-out"
+      className="w-full sticky top-0 p-6 transition-all duration-300 ease-in-out"
       id="header">
       <div
         ref={containerRef}
         className="container mx-auto transition-all duration-500 ease-in-out">
         <header className={header}>
-          <a href="/">
-            <h1 className={logo}>
-              <Branding style={{ marginRight: '10px' }} /> eddy
-            </h1>
-          </a>
+          {!currentUser && (
+            <a href="/">
+              <h1 className={logo}>
+                <Branding style={{ marginRight: '10px' }} /> eddy
+              </h1>
+            </a>
+          )}
           <nav>
-            {!currentUser ? (
-              location.pathname === '/' ? (
-                <ul className={`${publicNavigation} right-align`}>
-                  <li className={navlist}>
-                    <a href="#pricing" className={navlink}>
-                      Pricing
-                    </a>
-                  </li>
-                  <li className={navlist}>
-                    <a href="#team" className={navlink}>
-                      Team
-                    </a>
-                  </li>
-                  <li className={navlist}>
-                    <a href="#contact" className={navlink}>
-                      Contact
-                    </a>
-                  </li>
-                  <li>
-                    <NavLink className={ctaSignup} to="/login">
-                      Login
-                    </NavLink>
-                  </li>
-                </ul>
-              ) : (
-                <ul className={loginNavigation}>
-                  <li>
-                    <NavLink to="/" className={navlink}>
-                      <FontAwesomeIcon icon="chevron-left" /> Home
-                    </NavLink>
-                  </li>
-                </ul>
-              )
-            ) : (
-              <ul className={privateNavigation}>
-                <li>
-                  <a href="#pricing" className={navlink}>
-                    Pricing
-                  </a>
-                </li>
-                <li>
-                  <a href="#team" className={navlink}>
-                    Team
-                  </a>
-                </li>
-                <li>
-                  <a href="#contact" className={navlink}>
-                    Contact
-                  </a>
-                </li>
-                <li>
-                  <NavLink to="/dashboard" className={ctaDashboard}>
-                    Dashboard
-                  </NavLink>
-                </li>
-              </ul>
-            )}
+            <NavLinks
+              location={location}
+              isAuthenticated={isAuthenticated}
+              currentUser={currentUser}
+              signOut={signOut}
+            />
           </nav>
         </header>
       </div>

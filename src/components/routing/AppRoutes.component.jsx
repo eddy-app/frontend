@@ -5,19 +5,22 @@ import PublicRoutes from './PublicRoutes.component';
 import PrivateRoute from './PrivateRoute.component';
 import AdminRoute from './AdminRoute.component';
 import LazyDashboard from '../../pages/LazyDashboard';
+import Layout from '../Layout.component';
 
 const Dashboard = lazy(() => import('../../pages/Dashboard.page'));
 
-const AppRoutes = props => {
+const AppRoutes = () => {
   const authContext = useContext(AuthContext);
   const { isLoading, currentUser } = authContext;
 
   return (
     <>
-      <PublicRoutes {...props} />
+      <PublicRoutes />
       <Suspense fallback={<LazyDashboard />}>
         {!isLoading && currentUser ? (
-          <PrivateRoute path="/dashboard" exact component={Dashboard} />
+          <Layout>
+            <PrivateRoute path="/dashboard" exact component={Dashboard} />
+          </Layout>
         ) : (
           <PrivateRoute path="/dashboard" exact component={LazyDashboard} />
         )}

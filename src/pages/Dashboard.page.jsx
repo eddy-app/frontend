@@ -16,7 +16,6 @@ const Dashboard = () => {
   return (
     <div>
       <h1>Dashboard</h1>
-      {currentUser && <h2>{currentUser.name}</h2>}
       <button onClick={() => signOut()}>Logout</button>
       <Link to="/users">users</Link>
     </div>
