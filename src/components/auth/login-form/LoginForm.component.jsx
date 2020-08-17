@@ -5,7 +5,9 @@ import { useOktaAuth } from '@okta/okta-react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers';
+
 import { AuthContext } from '../../../context/AuthContext';
+import Input from '../../common/Input.component';
 import FormError from '../../common/FormError.component';
 
 const Login = () => {
@@ -51,24 +53,25 @@ const Login = () => {
   };
 
   if (sessionToken) return null;
+
   return (
     <div className="login">
       <form onSubmit={handleSubmit(onSubmit)}>
         <label htmlFor="email">
-          <input
+          <Input
             type="email"
             name="email"
-            ref={register}
             placeholder="Enter Email..."
+            ref={register}
           />
           {errors.email && <FormError message="Email is required" />}
         </label>
         <label htmlFor="password">
-          <input
+          <Input
             type="password"
             name="password"
-            ref={register}
             placeholder="Enter Password..."
+            ref={register}
           />
           {errors.username && <FormError message="Username is required" />}
         </label>
