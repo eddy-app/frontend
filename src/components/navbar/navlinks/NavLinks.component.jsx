@@ -60,9 +60,11 @@ const NavLinks = ({ location, currentUser, isAuthenticated, signOut }) => {
       return (
         <>
           <ul className={privateNavigation}>
-            <li>
-              <p>{currentUser.name}</p>
-            </li>
+            {currentUser && (
+              <li>
+                <p>{currentUser.name}</p>
+              </li>
+            )}
             <li>
               <button onClick={signOut} className={navlink}>
                 Logout

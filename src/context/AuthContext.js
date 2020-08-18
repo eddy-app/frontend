@@ -6,8 +6,8 @@ export const AuthContext = createContext();
 
 export const AuthState = ({ children }) => {
   const { authService } = useOktaAuth();
-  const { getIdToken, logout, getUser, _oktaAuth } = authService;
-  const [accessToken, setAccessToken] = useState(null);
+  const { getAccessToken, logout, getUser, _oktaAuth } = authService;
+  const [idToken, setIdToken] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -18,7 +18,7 @@ export const AuthState = ({ children }) => {
 
   authAxios.interceptors.request.use(
     config => {
-      config.headers.Authorization = `Bearer ${accessToken}`;
+      config.headers.Authorization = `Bearer ${idToken}`;
       return config;
     },
     err => {
@@ -39,22 +39,22 @@ export const AuthState = ({ children }) => {
     }
   );
 
-  const fetchAccessToken = useCallback(async () => {
+  const fetchIdToken = useCallback(async () => {
     try {
-      const token = await getIdToken();
-      await setAccessToken(token);
+      const idToken = await getAccessToken();
+      await setIdToken(idToken);
       await setIsLoggedIn(true);
     } catch (err) {
       return err;
     }
-  }, [getIdToken]);
+  }, [getAccessToken]);
 
   const signOut = useCallback(async () => {
     try {
       await logout('/');
       await setIsLoggedIn(false);
       await setCurrentUser(null);
-      await setAccessToken(null);
+      await setIdToken(null);
       await localStorage.removeItem('okta-pkce-storage');
       await localStorage.removeItem('okta-cache-storage');
       await localStorage.removeItem('okta-token-storage');
@@ -92,20 +92,20 @@ export const AuthState = ({ children }) => {
   }, [getUser, saveUser]);
 
   useEffect(() => {
-    fetchAccessToken();
+    fetchIdToken();
 
-    if (accessToken) {
+    if (idToken) {
       fetchUser();
       setIsLoading(false);
     }
     // eslint-disable-next-line
-  }, [accessToken]);
+  }, [idToken]);
 
   return (
     <AuthContext.Provider
       value={{
         currentUser,
-        accessToken,
+        idToken,
         isLoggedIn,
         isLoading,
         authAxios,

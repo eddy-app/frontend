@@ -1,19 +1,19 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import Navbar from './navbar/Navbar.component';
 import Sidebar from './sidebar/Sidebar.component';
-import { AuthContext } from '../context/AuthContext';
+// import { AuthContext } from '../context/AuthContext';
 
 const Layout = ({ children }) => {
-  const authContext = useContext(AuthContext);
-  const { currentUser } = authContext;
+  // const authContext = useContext(AuthContext);
+  // const { currentUser } = authContext;
   return (
-    <>
-      <div className={`h-screen flex ${currentUser ? 'flex-row' : 'flex-col'}`}>
-        <Sidebar />
+    <div className="flex h-screen">
+      <Sidebar />
+      <div className="h-full flex flex-col">
         <Navbar />
+        {children}
       </div>
-      {children}
-    </>
+    </div>
   );
 };
 

@@ -12,6 +12,7 @@ import LoginForm from '../components/auth/login-form/LoginForm.component';
 import { ReactComponent as Logo } from '../images/logo-login.svg';
 
 const Login = () => {
+  console.log(useOktaAuth());
   const history = useHistory();
   const [sessionToken, setSessionToken] = useState();
   const { authService } = useOktaAuth();

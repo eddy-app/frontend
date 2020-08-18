@@ -8,7 +8,9 @@ import {
   faCoffee,
   fas,
 } from '@fortawesome/free-solid-svg-icons';
+// State
 import { AuthState } from './context/AuthContext';
+import { UsersState } from './context/UsersContext';
 
 import AppRoutes from './components/routing/AppRoutes.component';
 import config from './config/oktaConfig';
@@ -20,7 +22,9 @@ const App = () => {
     <Router>
       <Security {...config}>
         <AuthState>
-          <AppRoutes />
+          <UsersState>
+            <AppRoutes />
+          </UsersState>
         </AuthState>
       </Security>
     </Router>

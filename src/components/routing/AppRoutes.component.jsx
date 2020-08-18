@@ -1,42 +1,41 @@
-import React, { lazy, Suspense, useContext } from 'react';
-import { AuthContext } from '../../context/AuthContext';
+import React, { lazy, Suspense } from 'react';
 
 import PublicRoutes from './PublicRoutes.component';
 import PrivateRoute from './PrivateRoute.component';
 import AdminRoute from './AdminRoute.component';
 import LazyDashboard from '../../pages/LazyDashboard';
-import Layout from '../Layout.component';
+import UsersPage from '../../pages/Users.page';
+import DevicesPage from '../../pages/Devices.page';
+import MyDevices from '../../pages/MyDevices.page';
+import Requests from '../../pages/Requests.page';
+import Settings from '../../pages/Settings.page';
 
 const Dashboard = lazy(() => import('../../pages/Dashboard.page'));
 
 const AppRoutes = () => {
-  const authContext = useContext(AuthContext);
-  const { isLoading, currentUser } = authContext;
-
   return (
     <>
       <PublicRoutes />
       <Suspense fallback={<LazyDashboard />}>
-        {!isLoading && currentUser ? (
-          <Layout>
-            <PrivateRoute path="/dashboard" exact component={Dashboard} />
-          </Layout>
-        ) : (
-          <PrivateRoute path="/dashboard" exact component={LazyDashboard} />
-        )}
+        <PrivateRoute path="/dashboard" exact>
+          <Dashboard />
+        </PrivateRoute>
       </Suspense>
-
-      <PrivateRoute path="/users/:uid" exact>
-        {/* */}
+      <PrivateRoute path="/users/devices/:uid" exact>
+        <MyDevices />
       </PrivateRoute>
-      <PrivateRoute path="/users/:uid/devices" exact>
-        {/* */}
+      <PrivateRoute path="/users/requests/:uid" exact>
+        <Requests />
       </PrivateRoute>
-      <PrivateRoute path="/users/:uid/devices/:deviceId" exact>
-        {/* */}
+      <PrivateRoute path="/settings/:uid" exact>
+        <Settings />
       </PrivateRoute>
-      <AdminRoute path="/users">{/*  */}</AdminRoute>
-      <AdminRoute path="/devices">{/*  */}</AdminRoute>
+      <AdminRoute path="/users" exact>
+        <UsersPage />
+      </AdminRoute>
+      <AdminRoute path="/devices">
+        <DevicesPage />
+      </AdminRoute>
     </>
   );
 };
