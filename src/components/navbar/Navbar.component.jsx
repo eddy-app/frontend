@@ -61,7 +61,7 @@ const Navbar = () => {
         ref={containerRef}
         className="container mx-auto transition-all duration-500 ease-in-out">
         <header className={header}>
-          {!currentUser && (
+          {!currentUser && location.pathname === '/' && (
             <a href="/">
               <h1 className={logo}>
                 <Branding style={{ marginRight: '10px' }} /> eddy

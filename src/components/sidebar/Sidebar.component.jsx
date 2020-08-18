@@ -1,10 +1,16 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-const Sidebar = props => {
+import { ReactComponent as Logo } from '../../images/logo-white-sidebar.svg';
+
+const Sidebar = () => {
   return (
-    <div className="bg-primary h-full w-1/12 pt-8 pl-8 ">
-      <ul className="flex flex-col justify-start text-white">
+    <div className="bg-primary h-full w-1/12 pt-8 pl-8">
+      <Logo />
+      <ul className="flex flex-col justify-start text-white mt-8">
+        <li>
+          <NavLink to="/dashboard">Dashboard</NavLink>
+        </li>
         <li>
           <NavLink to="/users">Users</NavLink>
         </li>
