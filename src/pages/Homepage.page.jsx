@@ -1,29 +1,18 @@
-import React, { useEffect } from 'react';
-import { useOktaAuth } from '@okta/okta-react';
-import { useHistory } from 'react-router-dom';
-
-import Navbar from '../components/navbar/Navbar.component';
-import Billboard from '../components/homepage-components/billboard/Billboard.component';
-import Pricing from '../components/homepage-components/pricing/Pricing.component';
+import React from "react"
+import Header from "../components/homepageComponents/header/Header.component"
+import Pricing from "../components/homepageComponents/pricing/Pricing.component"
+import Team from "../components/homepageComponents/team/Team.component"
+import Contact from "../components/homepageComponents/contact/Contact.component"
 
 const Homepage = () => {
-  const { authState } = useOktaAuth();
-  const { isAuthenticated } = authState;
-  const history = useHistory();
-
-  useEffect(() => {
-    if (isAuthenticated) history.push('/dashboard');
-  }, [history, isAuthenticated]);
-
   return (
     <>
-      <Navbar />
-      <div className="container mx-auto mt-4">
-        <Billboard />
-      </div>
+      <Header />
       <Pricing />
+      <Team />
+      <Contact />
     </>
-  );
-};
+  )
+}
 
-export default Homepage;
+export default Homepage

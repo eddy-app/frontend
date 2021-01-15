@@ -1,85 +1,65 @@
-import React, {
-  useEffect,
-  useState,
-  useRef,
-  useCallback,
-  useContext,
-} from 'react';
-import { useLocation } from 'react-router-dom';
-import { AuthContext } from '../../context/AuthContext';
-import NavLinks from './navlinks/NavLinks.component';
-import { ReactComponent as Branding } from '../../images/logo.svg';
-
-// Styles
-import { header, logo } from './Navbar.styles';
+import React, { useEffect, useRef, useCallback } from "react"
+import { useAuth0 } from "@auth0/auth0-react"
+import { useLocation } from "react-router-dom"
+import Page from "../../App.styled"
+import Nav from "./Navbar.styled"
 
 const Navbar = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const authContext = useContext(AuthContext);
-  const { isLoggedIn, currentUser, signOut } = authContext;
-  const location = useLocation();
-  const navRef = useRef();
-  const containerRef = useRef();
+  // const [show, setShow] = useState(false)
+  const { loginWithRedirect } = useAuth0()
+  const location = useLocation()
+  const navRef = useRef()
 
   const handleScroll = useCallback(() => {
-    if (window.pageYOffset > 30) {
-      navRef.current.classList.add('shadow-lg');
-      navRef.current.classList.add('bg-white');
-      navRef.current.classList.add('animated');
-      containerRef.current.classList.remove('container');
-      containerRef.current.classList.remove('mx-auto');
-      navRef.current.classList.add('fadeIn');
-      navRef.current.classList.add('slow');
-    } else {
-      navRef.current.classList.remove('shadow-lg');
-      navRef.current.classList.remove('bg-white');
-      navRef.current.classList.remove('animated');
-      containerRef.current.classList.add('container');
-      containerRef.current.classList.add('mx-auto');
-      navRef.current.classList.remove('fadeIn');
-      navRef.current.classList.remove('slow');
+    if (location.pathname === "/") {
+      if (window.pageYOffset > 30) {
+        navRef.current.classList.add("sticky")
+        navRef.current.classList.add("animated")
+        navRef.current.classList.add("fadeIn")
+        navRef.current.classList.add("fast")
+      } else {
+        navRef.current.classList.remove("sticky")
+        navRef.current.classList.remove("animated")
+        navRef.current.classList.remove("fadeIn")
+        navRef.current.classList.remove("fast")
+      }
     }
-  }, []);
+  }, [location])
 
   useEffect(() => {
-    if (isLoggedIn && currentUser) setIsAuthenticated(true);
-    handleScroll();
-
-    document.addEventListener('scroll', handleScroll);
+    handleScroll()
+    document.addEventListener("scroll", handleScroll)
     return () => {
-      document.removeEventListener('scroll', handleScroll);
-    };
-    // eslint-disable-next-line
-  }, [handleScroll]);
+      document.removeEventListener("scroll", handleScroll)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
-    <section
-      ref={navRef}
-      className="w-full sticky top-0 p-6 transition-all duration-300 ease-in-out"
-      id="header">
-      <div
-        ref={containerRef}
-        className="container mx-auto transition-all duration-500 ease-in-out">
-        <header className={header}>
-          {!currentUser && location.pathname === '/' && (
-            <a href="/">
-              <h1 className={logo}>
-                <Branding style={{ marginRight: '10px' }} /> eddy
-              </h1>
-            </a>
-          )}
-          <nav>
-            <NavLinks
-              location={location}
-              isAuthenticated={isAuthenticated}
-              currentUser={currentUser}
-              signOut={signOut}
-            />
-          </nav>
-        </header>
-      </div>
-    </section>
-  );
-};
+    <>
+      <Nav.container ref={navRef}>
+        <Page.container>
+          <Nav.content>
+            <Nav.logo href="/">LANDR</Nav.logo>
+            <Nav.navLinks>
+              <Nav.navLink>
+                <Nav.smoothAnchor href="#pricing">Pricing</Nav.smoothAnchor>
+              </Nav.navLink>
+              <Nav.navLink>
+                <Nav.smoothAnchor href="#team">Team</Nav.smoothAnchor>
+              </Nav.navLink>
+              <Nav.navLink>
+                <Nav.smoothAnchor href="#contact">Contact</Nav.smoothAnchor>
+              </Nav.navLink>
+              <Nav.navLink>
+                <Nav.navButton onClick={loginWithRedirect}>Login</Nav.navButton>
+              </Nav.navLink>
+            </Nav.navLinks>
+          </Nav.content>
+        </Page.container>
+      </Nav.container>
+    </>
+  )
+}
 
-export default Navbar;
+export default Navbar

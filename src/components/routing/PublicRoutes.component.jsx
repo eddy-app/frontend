@@ -1,8 +1,7 @@
-import React from 'react';
-import { Switch, Route } from 'react-router-dom';
-import { LoginCallback } from '@okta/okta-react';
-import Homepage from '../../pages/Homepage.page';
-import Login from '../../pages/Login.page';
+import React from "react"
+import { Switch, Route } from "react-router-dom"
+import Layout from "../layout/Layout.component"
+import Homepage from "../../pages/Homepage.page"
 
 // import NotFound from "../../pages/NotFound.component"
 
@@ -10,15 +9,12 @@ const PublicRoutes = () => {
   return (
     <Switch>
       <Route exact path="/">
-        <Homepage />
+        <Layout>
+          <Homepage />
+        </Layout>
       </Route>
-      <Route exact path="/login">
-        <Login />
-      </Route>
-      <Route path="/implicit/callback" component={LoginCallback} />
-      <Route path="*">{/* <NotFound /> */}</Route>
     </Switch>
-  );
-};
+  )
+}
 
-export default PublicRoutes;
+export default PublicRoutes

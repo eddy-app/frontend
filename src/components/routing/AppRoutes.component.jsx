@@ -1,22 +1,12 @@
-import React, { lazy, Suspense } from 'react';
+import React from "react"
 
-import PublicRoutes from './PublicRoutes.component';
-import PrivateRoute from './PrivateRoute.component';
-import AdminRoute from './AdminRoute.component';
-import LazyDashboard from '../../pages/LazyDashboard';
-import UsersPage from '../../pages/Users.page';
-import DevicesPage from '../../pages/Devices.page';
-import MyDevices from '../../pages/MyDevices.page';
-import Requests from '../../pages/Requests.page';
-import Settings from '../../pages/Settings.page';
-
-const Dashboard = lazy(() => import('../../pages/Dashboard.page'));
+import PublicRoutes from "./PublicRoutes.component"
 
 const AppRoutes = () => {
   return (
     <>
       <PublicRoutes />
-      <Suspense fallback={<LazyDashboard />}>
+      {/* <Suspense fallback={<LazyDashboard />}>
         <PrivateRoute path="/dashboard" exact>
           <Dashboard />
         </PrivateRoute>
@@ -35,9 +25,9 @@ const AppRoutes = () => {
       </AdminRoute>
       <AdminRoute path="/devices">
         <DevicesPage />
-      </AdminRoute>
+      </AdminRoute> */}
     </>
-  );
-};
+  )
+}
 
-export default AppRoutes;
+export default AppRoutes
